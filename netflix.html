@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js" integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+    <title>Watchlist For Value Investor</title>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a> |
+        <a href="profile.html">Profile</a> |
+    </nav>
+    <br>
+    <div class="Search">
+        <input type="text" placeholder="NFLX">
+    </div>
+    <hr>
+    <h3>Most upvoted financial data for Netflix Inc. (NFLX.US)</h3>
+    <strong>152 upvotes by Community</strong>
+    <table>
+        <thead>
+            <th></th>
+            <th colspan="5">History</th>
+            <th colspan="4">Estimates</th>
+        </thead>
+        <thead>
+            <th></th>
+            <th>2017(A)</th>
+            <th>2018(A)</th>
+            <th>2019(A)</th>
+            <th>2020(A)</th>
+            <th>2021(A)</th>
+            <th>2022(E)</th>
+            <th>2023(E)</th>
+            <th>2024(E)</th>
+            <th>2025(E)</th>
+        </thead>
+        <tr id="subs">
+            <td>Subscriber(in millions)</td><td>117</td><td>139</td><td>167</td><td>204</td><td>222</td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr id="ARPU">
+            <td>Average Revenue per user</td><td>99.91</td><td>113.59</td><td>120.71</td><td>122.54</td><td>133.78</td><td></td><td></td><td></td><td></td>
+        </tr>
+        <tr id="Rev" style="font-weight: bold;">
+            <td> = Total Revenue (Billions)</td><td>11.69</td><td>15.79</td><td>20.16</td><td>25.00</td><td>29.70</td><td>32.07</td><td>33.68</td><td>34.52</td><td>35.38</td>
+        </tr>
+        <tr id="Amortization">
+            <td> - Content Amortization Cost</td><td>7.66</td><td>9.97</td><td>12.44</td><td>15.27</td><td>17.33</td><td>18.72</td><td>19.65</td><td>20.15</td><td>20.65</td>
+        </tr>
+        <tr id="Marketing">
+            <td> - Marketing Cost</td><td></td><td></td><td></td><td></td><td>2.54</td><td>2.54</td><td>2.54</td><td>2.54</td><td>2.54</td>
+        </tr>
+        <tr id="R&D">
+            <td> - Technology and Development</td><td></td><td></td><td></td><td></td><td>2.27</td><td>2.27</td><td>2.27</td><td>2.27</td><td>2.27</td>
+        </tr>
+        <tr id="GeneralCost">
+            <td> - General &Admin Cost</td><td></td><td></td><td></td><td></td><td>1.35</td><td>1.35</td><td>1.35</td><td>1.35</td><td>1.35</td>
+        </tr>
+        <tr id="capex">
+            <td> - Investment in new Content</td><td></td><td></td><td></td><td></td><td>17.70</td><td>16.00</td><td>16.00</td><td>16.00</td><td>16.00</td>
+        </tr>
+        <tr id="fcf" style="font-weight: bold;">
+            <td>= Free Cashflow</td><td></td><td></td><td></td><td></td><td>-11.49</td><td>4.33</td><td>4.86</td><td>5.14</td><td>5.43</td>
+        </tr>
+    </table>
+    <h3>Other Analysts' coverage on Netflix</h3>
+    <ul>
+        <li><a href="#">Ben Gram, 89 upvotes</a></li>
+    </ul>
+
+    <hr>
+    <table>
+        <h3>Discounted Cash Flow Calculator</h3>
+        <thead>
+            <th>Discount Rate</th><th>Terminal Growth Rate after 2025</th>
+        </thead>
+        <tr>
+            <td><input id="discount_rate" type="number"  min="0.01" step="0.001" placeholder="0.08" onchange="calculate_market_cap()"></td>
+            <td><input id="terminal_growth" type="number" min="0.01" step="0.001" placeholder="0.025" onchange="calculate_market_cap()""></td>
+        </tr>
+    </table>
+    <br>
+    <table>
+        <thead>
+            <th>Market Value Calculated</th>
+        </thead>
+        <tr>
+            <td id="valuation"></td>
+        </tr>
+    </table>
+
+
+
+    <script>
+        $( document ).ready(function() {
+            calculate_market_cap()
+        });
+
+        function pv_factor(rate,year) {
+            console.log("rate and year: "+rate,year)
+            console.log("1+rate: "+(Number(1)+Number(rate)))
+            return Math.pow((Number(1)+Number(rate)), year)
+        }
+
+        function calculate_market_cap() {
+            let dcf_sum=0;
+            let rate=0;
+            let terminal_growth_rate=0;
+            if (!$("#discount_rate").val()) {
+                rate = 0.08;
+            } else {
+                rate =$("#discount_rate").val();
+            }
+            if (!$("#terminal_growth").val()) {
+                terminal_growth_rate = 0.025;
+            } else {
+                terminal_growth_rate= $("#terminal_growth").val();
+            }
+
+            console.log("discount rate is :"+rate)
+            console.log("terminal growth rate is :"+terminal_growth_rate)
+
+            $("#fcf").find('td').each (function(index, cell) {
+                // index 6 -index 9 are forward looking years
+                if (index > 5 && index<10) {
+                    dcf_sum = dcf_sum + parseFloat(cell.innerHTML)/pv_factor(rate, index-5)
+                    console.log("fcf for this period: "+parseFloat(cell.innerHTML))
+                    console.log("Discounted fcf for this period: "+dcf_sum)
+                }
+                if (index === 9) {
+                    // terminal value
+                    let t5_FCF = (1+terminal_growth_rate)*parseFloat(cell.innerHTML)
+                    let terminal_value = t5_FCF/(rate-terminal_growth_rate)
+                    console.log("terminal value: "+ terminal_value)
+                    dcf_sum = dcf_sum + (terminal_value/pv_factor(rate, index-5))
+                    console.log("Discounted fcf for this period: "+dcf_sum)
+                }  
+            });
+            $("#valuation").html(dcf_sum.toFixed(2) + "Billion USD")
+            console.log("total DCF: "+dcf_sum)
+        }
+        
+    </script>
+</body>
+</html>
