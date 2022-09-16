@@ -9,22 +9,30 @@
     <title>Watchlist For Value Investor</title>
 </head>
 <body>
-    <nav>
+    <div class="topnav">
         <a href="index.html">Home</a> |
-        <a href="profile.html">Profile</a> |
-    </nav>
-    <br>
-    <div class="Search">
-        <input type="text" placeholder="NFLX">
+        <!-- <a href="profile.html">Profile</a> | -->
+        <a href="#">About Magpie</a> |
+        <a href="#">Markets</a> |
+        <a href="#">Education</a> |
+        <a href="#">News</a> |
+        <a href="researchlistview.html">Research</a> |
+        <a href="index.html" class="active">Magpie Watchlist</a> |
+        <a href="#">Help</a> |
     </div>
-    <hr>
-    <h3>Most upvoted financial data for Netflix Inc. (NFLX.US)</h3>
-    <strong>152 upvotes by Community</strong>
+    <br>
+    <!-- <div class="Search">
+        <input type="text" placeholder="NFLX">
+    </div> -->
+    <!-- <hr> -->
+    <h3>Discounted Cashflow model for Netflix Inc. (NFLX.US)</h3>
+    <img src="https://universal.hellopublic.com/companyLogos/NFLX@2x.png" class="company_logo" alt="">
+    <!-- <strong>152 upvotes by Community</strong> -->
     <table>
         <thead>
             <th></th>
             <th colspan="5">History</th>
-            <th colspan="4">Estimates</th>
+            <th colspan="4">Forecast</th>
         </thead>
         <thead>
             <th></th>
@@ -38,70 +46,123 @@
             <th>2024(E)</th>
             <th>2025(E)</th>
         </thead>
-        <tr id="subs">
-            <td>Subscriber(in millions)</td><td>117</td><td>139</td><td>167</td><td>204</td><td>222</td><td></td><td></td><td></td><td></td>
+        <tr id="subs" class="editable">
+            <td>Subscriber(in millions)</td><td>117</td><td>139</td><td>167</td><td>204</td><td>222</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
         </tr>
-        <tr id="ARPU">
-            <td>Average Revenue per user</td><td>99.91</td><td>113.59</td><td>120.71</td><td>122.54</td><td>133.78</td><td></td><td></td><td></td><td></td>
+        <tr>
+            <td>Subscriber Growth</td><td colspan="5" style="text-align:center;">5 Year CAGR 13.67%</td><td colspan="4">2022-2025 Growth Rate: <input id="subs_growth_rate" type="number"  min="0.00" step="0.1" onchange="update_subscriber_estimate()"> %</td>
         </tr>
-        <tr id="Rev" style="font-weight: bold;">
-            <td> = Total Revenue (Billions)</td><td>11.69</td><td>15.79</td><td>20.16</td><td>25.00</td><td>29.70</td><td>32.07</td><td>33.68</td><td>34.52</td><td>35.38</td>
+        <tr id="ARPU" class="editable" >
+            <td>Average Revenue Per User</td><td>99.91</td><td>113.59</td><td>120.71</td><td>122.54</td><td>133.78</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
         </tr>
-        <tr id="Amortization">
-            <td> - Content Amortization Cost</td><td>7.66</td><td>9.97</td><td>12.44</td><td>15.27</td><td>17.33</td><td>18.72</td><td>19.65</td><td>20.15</td><td>20.65</td>
+        <tr>
+            <td>ARPU Growth</td><td colspan="5" style="text-align:center;">5 Year CAGR 6.01%</td><td colspan="4">2022-2025 Growth Rate: <input id="arpu_growth_rate" type="number"  min="0.00" step="0.1" onchange="update_apru_estimate()">%</td>
         </tr>
-        <tr id="Marketing">
-            <td> - Marketing Cost</td><td></td><td></td><td></td><td></td><td>2.54</td><td>2.54</td><td>2.54</td><td>2.54</td><td>2.54</td>
+        <tr id="Rev" class="editable" style="font-weight: bold;">
+            <td> = Total Revenue (Billions)</td><td>11.69</td><td>15.79</td><td>20.16</td><td>25.00</td><td>29.70</td><td></td><td></td><td></td><td></td>
         </tr>
-        <tr id="R&D">
-            <td> - Technology and Development</td><td></td><td></td><td></td><td></td><td>2.27</td><td>2.27</td><td>2.27</td><td>2.27</td><td>2.27</td>
+        <!-- <tr id="Amortization" class="editable" contenteditable="true">
+            <td> - Content Amortization Cost</td><td>7.66</td><td>9.97</td><td>12.44</td><td>15.27</td><td>17.33</td><td></td><td></td><td></td><td></td>
+        </tr> -->
+        <tr id="Marketing" class="editable">
+            <td> - Marketing Cost</td><td>1.44</td><td>2.37</td><td>2.65</td><td>2.23</td><td>2.54</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
         </tr>
-        <tr id="GeneralCost">
-            <td> - General &Admin Cost</td><td></td><td></td><td></td><td></td><td>1.35</td><td>1.35</td><td>1.35</td><td>1.35</td><td>1.35</td>
+        <tr>
+            <td></td><td colspan="5" style="text-align:center;">5 Year CAGR 12.02%</td><td colspan="4">2022-2025 Growth Rate:<input data-target="Marketing" type="number"  min="0.00" step="0.1" onchange="update_cost_growth_rate(this)">%</td>
         </tr>
-        <tr id="capex">
-            <td> - Investment in new Content</td><td></td><td></td><td></td><td></td><td>17.70</td><td>16.00</td><td>16.00</td><td>16.00</td><td>16.00</td>
+        <tr id="RD" class="editable">
+            <td> - Technology and Development</td><td>0.95</td><td>1.22</td><td>1.55</td><td>1.83</td><td>2.27</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+        </tr>
+        <tr>
+            <td></td><td colspan="5" style="text-align:center;">5 Year CAGR 19.03%</td><td colspan="4">2022-2025 Growth Rate:<input data-target="RD" type="number"  min="0.00" step="0.1" onchange="update_cost_growth_rate(this)">%</td>
+        </tr>
+        <tr id="GeneralCost" class="editable">
+            <td> - General &Admin Cost</td><td>0.43</td><td>0.63</td><td>0.91</td><td>1.08</td><td>1.35</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+        </tr>
+        <tr>
+            <td></td><td colspan="5" style="text-align:center;">5 Year CAGR 25.71%</td><td colspan="4">2022-2025 Growth Rate: <input data-target="GeneralCost"type="number"  min="0.00" step="0.1" onchange="update_cost_growth_rate(this)">%</td>
+        </tr>
+        <tr id="capex" class="editable">
+            <td> - Investment in new Content</td><td>9.81</td><td>13.04</td><td>13.92</td><td>11.78</td><td>17.70</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+        </tr>
+        <tr>
+            <td></td><td colspan="5" style="text-align:center;">5 Year CAGR 12.53%</td><td colspan="4">2022-2025 Growth Rate: <input data-target="capex" type="number"  min="0.00" step="0.1" onchange="update_cost_growth_rate(this)">%</td>
         </tr>
         <tr id="fcf" style="font-weight: bold;">
-            <td>= Free Cashflow</td><td></td><td></td><td></td><td></td><td>-11.49</td><td>4.33</td><td>4.86</td><td>5.14</td><td>5.43</td>
+            <td> = Adjusted Free Cashflow</td><td>-0.94</td><td>-1.75</td><td>1.13</td><td>8.08</td><td>5.84</td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
         </tr>
     </table>
-    <h3>Other Analysts' coverage on Netflix</h3>
+    
+    <!-- <h3>Other Analysts' coverage on Netflix</h3>
     <ul>
         <li><a href="#">Ben Gram, 89 upvotes</a></li>
-    </ul>
+    </ul> -->
 
-    <hr>
-    <table>
-        <h3>Discounted Cash Flow Calculator</h3>
-        <thead>
-            <th>Discount Rate</th><th>Terminal Growth Rate after 2025</th>
-        </thead>
-        <tr>
-            <td><input id="discount_rate" type="number"  min="0.01" step="0.001" placeholder="0.08" onchange="calculate_market_cap()"></td>
-            <td><input id="terminal_growth" type="number" min="0.01" step="0.001" placeholder="0.025" onchange="calculate_market_cap()""></td>
-        </tr>
-    </table>
-    <br>
     <table>
         <thead>
-            <th>Market Value Calculated</th>
+            <th>Required Return Rate</th><th>Growth after 2025</th><th>Market Value Estimation</th>
         </thead>
         <tr>
+            <td><input id="discount_rate" type="number"  min="0.01" step="0.001" value="0.08" onchange="calculate_market_cap()"></td>
+            <td><input id="terminal_growth" type="number" min="0.01" step="0.001" value="0.025" onchange="calculate_market_cap()"></td>
             <td id="valuation"></td>
         </tr>
     </table>
-
-
-
+    <div class="data_source">Historical data source: Netflix Investor Relations 
     <script>
         $( document ).ready(function() {
-            calculate_market_cap()
+            calculate_market_cap();
+            // document.getElementsByClassName("editable").addEventListener("input", function() {
+            //     console.log("data changing")
+            // }, false)
+            $(".editable").each(function() {
+                this.addEventListener("input", function(){
+                    console.log("data changing");
+                    calculate_market_cap()
+                })
+            })
         });
 
+        function update_subscriber_estimate() {
+            $("#subs").find('td').each(function(index, cell) {
+                if (index > 5 && index<10) {
+                    // console.log($("#subs_growth_rate").val());
+                    // console.log(Number($("#subs td:nth-child(6)").html()));
+                    cell.innerHTML = Math.round(Math.pow((Number(1)+Number($("#subs_growth_rate").val())/100),index-5)  * Number($("#subs td:nth-child(6)").html()));
+                }
+            })
+
+            calculate_market_cap();
+        }
+
+        function update_apru_estimate() {
+            $("#ARPU").find('td').each(function(index, cell) {
+                if (index > 5 && index<10) {
+                    // console.log($("#arpu_growth_rate").val());
+                    // console.log(Number($("#ARPU td:nth-child(6)").html()));
+                    cell.innerHTML = Math.round(Math.pow((Number(1)+Number($("#arpu_growth_rate").val())/100),index-5)  * Number($("#ARPU td:nth-child(6)").html()));
+                }
+            })
+
+            calculate_market_cap();
+        }
+
+        function update_cost_growth_rate(elem) {
+            console.log(elem);
+            const target_row_id = "#"+elem.dataset.target;
+            $(target_row_id).find('td').each(function(index, cell) {
+                if (index > 5 && index<10) {
+                    console.log(Math.pow((Number(1)+Number($(this).val())),index-5));
+                    console.log(Number($(target_row_id+" td:nth-child(6)").html()));
+                    cell.innerHTML = (Math.pow((Number(1)+Number($(elem).val())/100),index-5)  * Number($(target_row_id+" td:nth-child(6)").html())).toFixed(2);
+                }
+            })
+            calculate_market_cap();
+        }
+
         function pv_factor(rate,year) {
-            console.log("rate and year: "+rate,year)
-            console.log("1+rate: "+(Number(1)+Number(rate)))
+            // console.log("rate and year: "+rate,year)
+            // console.log("1+rate: "+(Number(1)+Number(rate)))
             return Math.pow((Number(1)+Number(rate)), year)
         }
 
@@ -109,38 +170,46 @@
             let dcf_sum=0;
             let rate=0;
             let terminal_growth_rate=0;
-            if (!$("#discount_rate").val()) {
-                rate = 0.08;
-            } else {
-                rate =$("#discount_rate").val();
-            }
-            if (!$("#terminal_growth").val()) {
-                terminal_growth_rate = 0.025;
-            } else {
-                terminal_growth_rate= $("#terminal_growth").val();
-            }
-
-            console.log("discount rate is :"+rate)
-            console.log("terminal growth rate is :"+terminal_growth_rate)
-
+            const subs = document.getElementById("subs").getElementsByTagName('td');
+            const arpu = document.getElementById("ARPU").getElementsByTagName('td');
+            // console.log(subs)
+            // console.log(arpu)
+            rate =Number($("#discount_rate").val());
+            terminal_growth_rate= Number($("#terminal_growth").val());
+            // console.log("discount rate is :"+rate)
+            // console.log("terminal growth rate is :"+terminal_growth_rate)
+            
             $("#fcf").find('td').each (function(index, cell) {
                 // index 6 -index 9 are forward looking years
                 if (index > 5 && index<10) {
+                    // TODO: change the FCF cells data by adding/subtracting items
+                    const nthchild = Number(index) + Number(1);
+                    // const rev = Number($("#Rev td:nth-child("+nthchild+")").html());
+                    const rev = Number(subs[index].innerHTML)*Number(arpu[index].innerHTML)/1000
+                    // console.log(rev);
+                    $("#Rev td:nth-child("+nthchild+")").html(rev);
+                    const mkt_cost = Number($("#Marketing td:nth-child("+nthchild+")").html());
+                    const r_and_d = Number($("#RD td:nth-child("+nthchild+")").html());
+                    const sg_and_a = Number($("#GeneralCost td:nth-child("+nthchild+")").html());
+                    const capex = Number($("#capex td:nth-child("+nthchild+")").html());
+                    const fcf = rev-mkt_cost-r_and_d-sg_and_a-capex
+                    // console.log("fcf for the year: "+ fcf);
+                    cell.innerHTML = fcf.toFixed(2)
                     dcf_sum = dcf_sum + parseFloat(cell.innerHTML)/pv_factor(rate, index-5)
-                    console.log("fcf for this period: "+parseFloat(cell.innerHTML))
-                    console.log("Discounted fcf for this period: "+dcf_sum)
+                    // console.log("Accumulated Discounted fcf for this period: "+dcf_sum)
                 }
                 if (index === 9) {
                     // terminal value
                     let t5_FCF = (1+terminal_growth_rate)*parseFloat(cell.innerHTML)
                     let terminal_value = t5_FCF/(rate-terminal_growth_rate)
-                    console.log("terminal value: "+ terminal_value)
+                    // console.log("terminal value: "+ terminal_value)
                     dcf_sum = dcf_sum + (terminal_value/pv_factor(rate, index-5))
-                    console.log("Discounted fcf for this period: "+dcf_sum)
+                    // console.log("Accumulated Discounted fcf for this period: "+dcf_sum)
                 }  
+                // console.log("-------------------------------------")
             });
-            $("#valuation").html(dcf_sum.toFixed(2) + "Billion USD")
-            console.log("total DCF: "+dcf_sum)
+            $("#valuation").html(dcf_sum.toFixed(2) + " Billion USD")
+            // console.log("total DCF: "+dcf_sum)
         }
         
     </script>
